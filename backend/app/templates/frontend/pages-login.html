@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static "img/favicon.png" %}" rel="icon">
+  <link href="{% static "img/apple-touch-icon.png" %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/bootstrap-icons/bootstrap-icons.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/boxicons/css/boxicons.min.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/quill/quill.snow.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/quill/quill.bubble.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/remixicon/remixicon.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/simple-datatables/style.css" %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static "css/style.css" %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Updated: Apr 20 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+    body {
+        background-color: #f1f5f8; /* Cor de fundo */
+    }
+
+    .login-container {
+        display: flex;
+        justify-content: center; /* Centraliza conteúdo horizontalmente */
+        align-items: center; /* Centraliza conteúdo verticalmente */
+        height: 100vh; /* Altura total da viewport */
+    }
+
+    .login-form {
+        background-color: white; /* Fundo branco para o formulário */
+        padding: 40px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    }
+
+    .login-background {
+        background-image: url('{% static "img/graphic-side.svg" %}'); /* Caminho para a imagem */
+        background-size: cover;
+        background-position: center;
+        height: 100vh; /* Altura total da viewport */
+    }
+
+    .login-background img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+</head>
+<body>
+<div class="container-fluid" >
+    <div class="row">
+        <!-- Área do Formulário de Login -->
+        <div class="col-lg-6 col-md-12 login-container">
+            <div class="login-form" style="width: 60%;">
+                <div class="py-4 text-center">
+                        <img src="{% static "img/logo.png" %}" alt="" class="img-fluid mx-auto d-block">
+                    </div><!-- End Logo -->
+
+                <div >
+                    <div class="card-body">
+                        <div class="pt-4 pb-2">
+                            <h5 class="card-title text-center pb-0 fs-4">Entrar</h5>
+                            <p class="text-center small">Faça login para ficar conectado</p>
+                        </div>
+                        <form class="row g-3 needs-validation" novalidate action="{% url 'login' %}" method="POST" onsubmit="return validateForm()">  {% csrf_token %}
+                    <div class="col-12">
+                      <label for="yourUsername" class="form-label">Usuario</label>
+                      <div class="input-group has-validation">
+                        <input type="text" class="form-control" name="username" id="inputText" required>
+                        <div class="invalid-feedback">Por favor insira o usuario</div>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="yourPassword" class="form-label">Senha</label>
+                      <input type="password" class="form-control" name="senha" id="inputPassword" required>
+                      <div class="invalid-feedback">Por favor insira a senha</div>
+                    </div>
+                    <div class="col-12">
+                      <button class="btn btn-primary w-100" type="submit">Entrar</button>
+                    </div>
+                    <div class="col-12">
+                      <p class="small mb-0">Não lembra sua senha? Contate um administrador</p>
+                    </div>
+                  </form>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+
+        <!-- Imagem de Fundo na Metade Direita -->
+        <div class="col-lg-6 d-none d-lg-block login-background"></div>
+    </div>
+</div>
+
+<!-- Bootstrap JS, se necessário -->
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script> -->
+
+<!-- Se você já tem os scripts incluídos, descomente a linha acima, caso contrário, insira o caminho para o Bootstrap JS aqui -->
+</body>
+</html>

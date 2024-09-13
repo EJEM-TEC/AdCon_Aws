@@ -1,0 +1,302 @@
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static "img/logo.png" %}" rel="icon">
+  <link href="{% static "img/logo.png" %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/bootstrap-icons/bootstrap-icons.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/boxicons/css/boxicons.min.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/quill/quill.snow.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/quill/quill.bubble.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/remixicon/remixicon.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/simple-datatables/style.css" %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static "css/style.css" %}" rel="stylesheet">
+  <script>
+    function validateForm() {
+      var password = document.getElementById('inputPassword').value;
+      var confirmPassword = document.getElementById('inputConfirmPassword').value;
+      if (password !== confirmPassword) {
+        alert('As senhas não coincidem.');
+        return false;
+      }
+      return true;
+    }
+  </script>
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Updated: Apr 20 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="{% url 'index' %}" class="logo d-flex align-items-center">
+        <img src="{% static "img/logo.png" %}" alt="">
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{user.username}}</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>{{user.username}}</h6>
+              <span>{{ user.groups.first.name }}</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="{% url 'perfil' user_id=user.id %}">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <form action={% url 'logout' %} method="POST" class="dropdown-item d-flex align-items-center" href="{% url 'logout' %}">{%csrf_token%}
+                  <button class="dropdown-item d-flex align-items-center" type="submit">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Fazer logout</span>
+                  </button>
+                </form>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'index' %}">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-heading">Pages</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'fontes_receitas' %}">
+          <i class="bi bi-cash-coin"></i>
+          <span>Fontes de Receita</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'tributos' %}">
+          <i class="bi bi-file-earmark-text-fill"></i>
+          <span>Tributos</span>
+        </a>
+      </li><!-- End F.A.Q Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href={% url 'colaboradores' %}>
+          <i class="bi bi-people-fill"></i>
+          <span>Colaboradores</span>
+        </a>
+      </li><!-- End Contact Page Nav -->
+
+      <!-- AQUI ACABA A AREA PADRÃO DE TODAS AS PAGINAS -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main" style="background-image: url('{% static "img/graphic-side.svg" %}');">
+
+    <div class="pagetitle">
+      <h1 class="text-white">Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active text-white"><a href="{% url 'index' %}">Home</a></li>
+          <li class="breadcrumb-item active text-white">Edição de Usuário</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+
+    <div class="card">
+        <div class="card-body p-4">
+            <form method="POST"> {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nomeEmpresa">Nome da Empresa</label>
+                                <input type="text" class="form-control" id="nomeEmpresa" name="nome_empresa" value="{{ empresa.nome }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="atividade">Atividade</label>
+                                <input type="text" class="form-control" id="atividade" name="atividade_empresa" value="{{ empresa.atividade }}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 my-3">
+                            <div class="form-group">
+                                <label for="responsaveis">Setor</label>
+                                <input type="text" class="form-control" id="responsaveis" name="responsaveis_empresa" value="{{ empresa.responsaveis }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="regimeApuracao">Regime de Apuração</label>
+                        <select class="form-select" id="regimeApuracao" name="regime_apuracao" data-value="{{ empresa.regime_apuracao }}">
+                            <option value="Simples Nacional">Simples Nacional</option>
+                            <option value="Lucro Real">Lucro Real</option>
+                            <option value="Lucro Presumido">Lucro Presumido</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <!-- Linha separadora -->
+                    <hr>
+
+                    <!-- Seções de Inscrição -->
+                    <div class="row">
+                        <!-- Inscrição Municipal -->
+                        <div class="col-lg-4">
+                            <h2>Inscrição Municipal</h2>
+                            <div class="form-check">
+                                <input type="checkbox" value="true" class="form-check-input" id="comCertificadoMunicipal" name="certificado_digital_municipal">
+                                <label class="form-check-label" for="comCertificadoMunicipal" data-value="{{ municipal.certificado_digital_municipal }}">Com certificado digital?</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="ccm">CCM</label>
+                                <input type="text" class="form-control" id="ccm" name="ccm_municipal" value="{{ municipal.ccm }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="loginMunicipal">Login</label>
+                                <input type="text" class="form-control" id="loginMunicipal" name="login_municipal" value="{{ municipal.login_municipal }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="senhaMunicipal">Senha</label>
+                                <input type="password" class="form-control" id="senhaMunicipal" name="senha_municipal" value="{{ municipal.senha_municipal }}">
+                            </div>
+                        </div>
+
+                        <!-- Inscrição Estadual -->
+                        <div class="col-lg-4">
+                            <h2>Inscrição Estadual</h2>
+                            <div class="form-check">
+                                <input type="checkbox" value="true" class="form-check-input" id="comCertificadoEstadual" name="certificado_digital_estadual">
+                                <label class="form-check-label" for="comCertificadoEstadual" data-value="{{ estadual.certificado_digital_estadual }}">Com certificado digital?</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="ie">IE</label>
+                                <input type="text" class="form-control" id="ie" name="ie_estadual" value="{{ estadual.ie }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="loginEstadual">Login</label>
+                                <input type="text" class="form-control" id="loginEstadual" name="login_estadual" value="{{ estadual.login_estadual }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="senhaEstadual">Senha</label>
+                                <input type="password" class="form-control" id="senhaEstadual" name="senha_estadual" value="{{ estadual.senha_estadual }}">
+                            </div>
+                        </div>
+
+                        <!-- Inscrição Federal -->
+                        <div class="col-lg-4">
+                            <h2>Inscrição Federal</h2>
+                            <div class="form-check">
+                                <input type="checkbox" value="true" class="form-check-input" id="comCertificadoFederal" name="certificado_digital_federal">
+                                <label class="form-check-label" for="comCertificadoFederal" data-value="{{ federal.certificado_digital_federal }}">Com certificado digital?</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="cnpjFederal">CNPJ</label>
+                                <input type="text" class="form-control" id="cnpjFederal" name="cnpj_federal" value="{{ federal.cnpj }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="loginFederal">Login</label>
+                                <input type="text" class="form-control" id="loginFederal" name="login_federal" value="{{ federal.login_federal }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="senhaFederal">Senha</label>
+                                <input type="password" class="form-control" id="senhaFederal" name="senha_federal" value="{{ federal.senha_federal }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer my-4">
+                        <button type="reset" class="btn btn-secondary mx-4" data-dismiss="modal">Resetar</button>
+                        <button type="submit" class="btn btn-primary" id="salvarEmpresa">Salvar</button>
+                    </div>
+                </form>
+        </div>
+    </div><!-- End Card with titles, buttons, and links -->
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static "vendor/apexcharts/apexcharts.min.js" %}"></script>
+  <script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+  <script src="{% static "vendor/chart.js/chart.umd.js" %}"></script>
+  <script src="{% static "vendor/echarts/echarts.min.js" %}"></script>
+  <script src="{% static "vendor/quill/quill.js" %}"></script>
+  <script src="{% static "vendor/simple-datatables/simple-datatables.js" %}"></script>
+  <script src="{% static "vendor/tinymce/tinymce.min.js" %}"></script>
+  <script src="{% static "vendor/php-email-form/validate.js" %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static "js/main.js" %}"></script>
+
+</body>
+
+</html>

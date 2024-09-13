@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static "img/favicon.png" %}" rel="icon">
+  <link href="{% static "img/apple-touch-icon.png" %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/bootstrap-icons/bootstrap-icons.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/boxicons/css/boxicons.min.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/quill/quill.snow.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/quill/quill.bubble.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/remixicon/remixicon.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/simple-datatables/style.css" %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static "css/style.css" %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Updated: Apr 20 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="{% url 'index' %}" class="logo d-flex align-items-center">
+        <img src="{% static "img/logo.png" %}" alt="">
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+        
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{user.username}}</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>{{user.username}}</h6>
+              <span>{{ user.groups.first.name }}</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="{% url 'perfil' user_id=user.id %}">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <form action={% url 'logout' %} method="POST" class="dropdown-item d-flex align-items-center" href="{% url 'logout' %}">{%csrf_token%}
+                  <button class="dropdown-item d-flex align-items-center" type="submit">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Fazer logout</span>
+                  </button>
+                </form>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'index' %}">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-heading">Pages</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'fontes_receitas' %}">
+          <i class="bi bi-cash-coin"></i>
+          <span>Fontes de Receita</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'tributos' %}">
+          <i class="bi bi-file-earmark-text-fill"></i>
+          <span>Tributos</span>
+        </a>
+      </li><!-- End F.A.Q Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href={% url 'colaboradores' %}>
+          <i class="bi bi-people-fill"></i>
+          <span>Colaboradores</span>
+        </a>
+      </li><!-- End Contact Page Nav -->
+
+      <!-- AQUI ACABA A AREA PADRÃO DE TODAS AS PAGINAS -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main" style="background-image: url('{% static "img/graphic-side.svg" %}');">
+
+    <div class="pagetitle">
+      <h1 style="color: white;">Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb" style="margin-bottom: 50px; margin-top: 50px; font-size: xx-large;">
+          <li class="breadcrumb-item" style="color: white;">{{ empresa.nome }}</li>
+          <li class="breadcrumb-item" style="color: white;" >Visão geral</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-7">
+          <div class="row">
+
+            <!-- Sales Card -->
+            <div class="col-xl-6">
+              <div class="card info-card sales-card">
+
+                
+
+                <div class="card-body">
+                  <h5 class="card-title">Fontes de Receita</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-cart"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{ n_empresa_fontes_receita }}</h6>
+                      
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+            <!-- Customers Card -->
+            <div class="col-xl-6">
+
+              <div class="card info-card customers-card">
+
+                <div class="card-body">
+                  <h5 class="card-title">Tributos</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-people"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{ n_empresa_tributos }}</h6>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div><!-- End Customers Card -->
+            <div class="col-12">
+
+              <div class="card info-card customers-card">
+
+                <div class="card-body">
+                  <h5 class="card-title">Transações</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-people"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>$ {{ sum_transacoes }}</h6>
+                      
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+            <!-- Reports -->
+            <div class="col-12">
+              <div class="card">
+
+                
+
+                <div class="card-body">
+                  <h5 class="card-title">Transações <span>/Today</span></h5>
+
+                  <!-- Line Chart -->
+                  <div id="reportsChart"></div>
+
+                  <script>
+                          document.addEventListener("DOMContentLoaded", () => {
+                            // Parse the JSON data passed from Django
+                            const chartData = JSON.parse('{{ data_for_chart|safe }}');
+                            const categories = chartData.categories;
+                            const seriesData = chartData.series;
+
+                            new ApexCharts(document.querySelector("#reportsChart"), {
+                              series: [{
+                                name: 'Transações',
+                                data: seriesData,
+                              }],
+                              chart: {
+                                height: 350,
+                                type: 'area',
+                                toolbar: {
+                                  show: false
+                                },
+                              },
+                              markers: {
+                                size: 4
+                              },
+                              colors: ['#4154f1'],
+                              fill: {
+                                type: "gradient",
+                                gradient: {
+                                  shadeIntensity: 1,
+                                  opacityFrom: 0.3,
+                                  opacityTo: 0.4,
+                                  stops: [0, 90, 100]
+                                }
+                              },
+                              dataLabels: {
+                                enabled: false
+                              },
+                              stroke: {
+                                curve: 'smooth',
+                                width: 2
+                              },
+                              xaxis: {
+                                type: 'datetime',
+                                categories: categories
+                              },
+                              tooltip: {
+                                x: {
+                                  format: 'dd/MM/yyyy'
+                                },
+                              }
+                            }).render();
+                          });
+                        </script>
+                  <!-- End Line Chart -->
+
+                </div>
+
+              </div>
+            </div><!-- End Reports -->
+          </div>
+        </div><!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        <div class="col-lg-5">
+
+          <!-- Recent Activity -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title my-3" style="display: flex; align-items: center; justify-content: space-between;">
+                {{ empresa.nome }}
+  
+            </h5>
+              <p>Regime de apuração: <b>{{ empresa.regime_apuracao }}</b></p>
+              <p>Atividade: <b>{{ empresa.atividade }}</b></p>
+              <p>Transações: <b><a href="{% url 'transacoes' empresa_id=empresa.id_empresa %}">Ver historico de transações</a></b></p><br><hr style="margin-top: 8%; margin-bottom: 7%;"><br>
+              <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Inscrição Municipal
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body" style="background-color: aliceblue;">
+                      <p style="padding: 10px;">Cadastro de Contribuintes Mobiliários (CCM):</p>
+                      <b style="padding: 10px; border: 1px; border-color: black; border-style: solid; border-radius: 10px; width: 100%; background-color: white;">{{ empresa.ccm_municipal.ccm }}</b>
+                      <p style="padding: 10px;">Login:</p>
+                      <b style="padding: 10px; border: 1px; border-color: black; border-style: solid; border-radius: 10px; width: 100%; background-color: white;">{{ Ccm.login_municipal }}</b>
+                      <p style="padding: 10px;">Senha: </p>
+                      <b style="padding: 10px; border: 1px; border-color: black; border-style: solid; border-radius: 10px; width: 100%; background-color: white;">{{ Ccm.senha_municipal }}</b>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Inscrição Estadual
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body" style="background-color: aliceblue;">
+                      <p style="padding: 10px;">IE:</p>
+                      <b style="padding: 10px; border: 1px; border-color: black; border-style: solid; border-radius: 10px; width: 100%; background-color: white;">{{ empresa.ie_estadual.ie }}</b>
+                      <p style="padding: 10px;">Login:</p>
+                      <b style="padding: 10px; border: 1px; border-color: black; border-style: solid; border-radius: 10px; width: 100%; background-color: white;">{{ Ie.login_estadual }}</b>
+                      <p style="padding: 10px;">Senha: </p>
+                      <b style="padding: 10px; border: 1px; border-color: black; border-style: solid; border-radius: 10px; width: 100%; background-color: white;">{{ Ie.senha_estadual }}</b>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Inscrição Federal
+                    </button>
+                  </h2>
+                  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body" style="background-color: aliceblue;">
+                      <p style="padding: 10px;">CNPJ:</p>
+                      <b style="padding: 10px; border: 1px; border-color: black; border-style: solid; border-radius: 10px; width: 100%; background-color: white;">{{ empresa.cnpj_federal.cnpj }}</b>
+                      <p style="padding: 10px;">Login:</p>
+                      <b style="padding: 10px; border: 1px; border-color: black; border-style: solid; border-radius: 10px; width: 100%; background-color: white;">{{ Cnpj.login_federal }}</b>
+                      <p style="padding: 10px;">Senha: </p>
+                      <b style="padding: 10px; border: 1px; border-color: black; border-style: solid; border-radius: 10px; width: 100%; background-color: white;">{{ Cnpj.senha_federal }}</b>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End Recent Activity -->
+
+          
+
+        </div><!-- End Right side columns -->
+        <div class="row">
+
+          <!-- Left side columns -->
+          <div class="col-4">
+            <div class="card recent-sales overflow-auto">
+              
+
+              <div class="card-body">
+                
+                
+                <h5 class="card-title" style="display: flex; justify-content: space-between;">
+                  <span><h5 class="card-title">Fontes de receitas</h5></span>
+                  <a href="{% url 'ass_empresa_fonte_receita' empresa_id=empresa.id_empresa %}">
+                    <i style="font-size: 2rem; color: black;" class="bi bi-plus-lg"></i>
+                  </a>
+                  <div class="modal fade" id="fontesreceitas" tabindex="-1" role="dialog" aria-labelledby="modalAdicionarEmpresaLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h2 class="modal-title font-weight-bold" id="modalAdicionarEmpresaLabel">Adicionar Fonte de receita</h2>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <!-- Formulário para informações gerais -->
+                      <form>
+                        <div class="row">
+                                <div class="col-md-8">
+                                  <div class="form-group">
+                                    <label for="regimeApuracao">Fonte de receita</label>
+                                    <select class="form-control" id="regimeApuracao" name="fonte_receita" required>
+                                      {% for fonte_receita in fontes_receita %}
+                                      <option value="{{ fonte_receita.id_fonte_receita }}">{{ fonte_receita.nome }}</option>
+                                      {% endfor %}
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                        
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                      <button type="button" class="btn btn-primary" id="salvarEmpresa">Salvar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              </h5>
+              
+
+                <table class="table table-borderless datatable">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Nome</th>
+                        <th scope="col">Ação</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for fonte_receita in fontes_receitas %}
+                    <tr>
+                      <th scope="row">{{ fonte_receita.id_fonte_receita }}</th>
+                      <td>{{ fonte_receita.nome }}</td>
+                        <td>
+                            <a href="{% url 'dis_empresa_fonte_receita' empresa_id=empresa.id_empresa fontereceita_id=fonte_receita.id_fonte_receita %}" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+              </div>
+              
+
+            </div>
+            
+          </div><!-- End Recent Sales -->
+          <div class="col-8">
+            <div class="card recent-sales overflow-auto">
+
+              
+
+              <div class="card-body">
+                 <h5 class="card-title" style="display: flex; justify-content: space-between;">
+                  <span><h5 class="card-title">Valores de Pagamento</h5></span>
+              </h5>
+
+                  <table class="table table-borderless datatable">
+                  <thead>
+                    <tr>
+                      <th scope="col">Tributo</th>
+                      <th scope="col">Valor imposto (R$)</th>
+                        <th scope="col">Valor dedução (R$)</th>
+                        <th scope="col">Valor a ser pago (R$)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for contexto in contextos.tributo_contexts %}
+                    <tr>
+                      <th scope="row">{{ contexto.tributo }}</th>
+                      <td>R$ {{ contexto.total_imposto }}</td>
+                        <td>
+                            R$ {{ contexto.total_deducao }}
+                        </td>
+                     <td>
+                            R$ {{ contexto.total_a_pagar }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+              </div>
+              
+
+            </div>
+            
+          </div><!-- End Recent Sales -->
+      </div>
+      <div class="row">
+      <div class="card recent-sales overflow-auto">
+          <div class="card-body">
+
+
+
+          <h5 class="card-title" style="display: flex; justify-content: space-between;">
+                  <span><h5 class="card-title">Tributos</h5></span>
+                  <a href="{% url 'ass_empresa_tributo' empresa_id=empresa.id_empresa %}">
+                    <i style="font-size: 2rem; color: black;" class="bi bi-plus-lg"></i>
+                  </a>
+              </h5>
+
+                <table class="table table-borderless datatable">
+                  <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Fonte de Receita</th>
+                              <th scope="col">Envio de E-mail</th>
+                              <th scope="col">Confirmação E-mail</th>
+                            <th scope="col">Data de vencimento</th>
+                              <th scope="col">Período de Pagamento</th>
+                            <th scope="col">Critérios</th>
+                            <th scope="col">Ações</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for tributo in tributos %}
+                          <tr>
+                            <th scope="row">{{ tributo.id_tributo }}</th>
+                            <td>{{ tributo.nome }}</td>
+                            <td>{{ tributo.id_fonte_receita_fonte_receita.nome }}</td>
+                              <td>{{ tributo.envio_email }}</td>
+                              <td>{{ tributo.confirmacao_email }}</td>
+                            <td>{{ tributo.id_data_vencimento_vencimento.dia}}</td>
+                            <td>{{ tributo.id_data_vencimento_vencimento.periodo_pagamento}}</td>
+                            <td><a href="{% url 'criterios' tributo_id=tributo.id_tributo %}"><i class="bi bi-table"></i></a></td>
+                            <td>
+                                <a href="{% url 'dis_empresa_tributo' empresa_id=empresa.id_empresa tributo_id=tributo.id_tributo %}"><i class="bi bi-trash-fill"></i></a>
+                            </td>
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+
+              </div>
+
+            </div>
+          </div>
+
+            <div class="row">
+             <div class="card recent-sales overflow-auto">
+                 <div class="card-body">
+                   <h5 class="card-title" style="display: flex; justify-content: space-between;">
+                      <span><h5 class="card-title">Observações</h5></span>
+                      <a href="{% url 'adicionar_observacao' empresa_id=empresa.id_empresa %}">
+                        <i style="font-size: 2rem; color: black;" class="bi bi-plus-lg"></i>
+                      </a>
+                  </h5>
+                <table class="table table-borderless datatable">
+                  <thead>
+                    <tr>
+                      <th scope="col">Id</th>
+                      <th scope="col">Observação</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for observacao in observacoes %}
+                    <tr>
+                      <th scope="row">{{ observacao.id }}</th>
+                      <td>{{ observacao.observacao }}</td>
+                      <td>
+                            <a href="{% url 'deletar_observacao' empresa_id=empresa.id_empresa observacao_id=observacao.id %}" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row">
+             <div class="card recent-sales overflow-auto">
+                 <div class="card-body">
+                 <h5 class="card-title" style="display: flex; justify-content: space-between;">
+                  <span><h5 class="card-title">Históricos</h5></span>
+                  <a href="{% url 'adicionar_historico' empresa_id=empresa.id_empresa %}">
+                    <i style="font-size: 2rem; color: black;" class="bi bi-plus-lg"></i>
+                  </a>
+              </h5>
+                <table class="table table-borderless datatable">
+                  <thead>
+                    <tr>
+                      <th scope="col">Id</th>
+                      <th scope="col">Data</th>
+                        <th scope="col">Informação</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for historico in historicos %}
+                    <tr>
+                      <th scope="row">{{ historico.id }}</th>
+                        <td>{{ historico.data }}</td>
+                      <td>{{ historico.informacao }}</td>
+                      <td>
+                            <a href="{% url 'deletar_historico' empresa_id=empresa.id_empresa historico_id=historico.id %}" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+              </div>
+
+            </div>
+          </div>
+
+          </div><!-- End Recent Sales -->
+      </div>
+    </div>
+
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static "vendor/apexcharts/apexcharts.min.js" %}"></script>
+  <script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+  <script src="{% static "vendor/chart.js/chart.umd.js" %}"></script>
+  <script src="{% static "vendor/echarts/echarts.min.js" %}"></script>
+  <script src="{% static "vendor/quill/quill.js" %}"></script>
+  <script src="{% static "vendor/simple-datatables/simple-datatables.js" %}"></script>
+  <script src="{% static "vendor/tinymce/tinymce.min.js" %}"></script>
+  <script src="{% static "vendor/php-email-form/validate.js" %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static "js/main.js" %}"></script>
+
+</body>
+
+</html>
